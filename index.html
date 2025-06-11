@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Pet Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Pet Store</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#pets">Pets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="featured-pets">
+            <h2>Featured Pets</h2>
+            <div class="pet-cards">
+                <div class="pet-card">
+                    <img src="img/dog.jpg" alt="Charlie - Golden Retriever">
+                    <h3>Charlie - Golden Retriever</h3>
+                    <button class="adopt-btn" onclick="adoptPet()">Adopt Now</button>
+                </div>
+                <div class="pet-card">
+                    <img src="img/cat.webp" alt="Milo - British Shorthair">
+                    <h3>Milo - British Shorthair</h3>
+                    <button class="adopt-btn" onclick="adoptPet()">Adopt Now</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Contact us at: <a href="mailto:info@petstore.com">info@petstore.com</a></p>
+    </footer>
+
+    <!-- Add script reference at the end of body -->
+    <script src="script.js"></script>
+</body>
+</html> 
