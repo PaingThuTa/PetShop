@@ -20,14 +20,13 @@ const pets = [
 
 // Carousel functionality
 let currentSlide = 0;
-const cardsPerView = window.innerWidth <= 768 ? 1 : 3;
 
 function initCarousel() {
     const carousel = document.querySelector('.pet-cards');
     const dotsContainer = document.querySelector('.carousel-dots');
     
     if (carousel && dotsContainer) {
-        const totalSlides = Math.ceil(carousel.children.length / cardsPerView);
+        const totalSlides = carousel.children.length;
         
         // Create dots
         for (let i = 0; i < totalSlides; i++) {
@@ -44,8 +43,9 @@ function initCarousel() {
 
 function moveCarousel(direction) {
     const carousel = document.querySelector('.pet-cards');
-    const totalSlides = Math.ceil(carousel.children.length / cardsPerView);
+    if (!carousel) return;
     
+    const totalSlides = carousel.children.length;
     currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
     updateCarousel();
 }
@@ -60,8 +60,7 @@ function updateCarousel() {
     const dots = document.querySelectorAll('.dot');
     
     if (carousel) {
-        const slideWidth = 100 / cardsPerView;
-        carousel.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+        carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
         
         // Update dots
         dots.forEach((dot, index) => {
@@ -144,15 +143,6 @@ function displayPets(petsToShow) {
 document.addEventListener('DOMContentLoaded', () => {
     loadPets();
     initCarousel();
-});
-
-// Update carousel view on window resize
-window.addEventListener('resize', () => {
-    const newCardsPerView = window.innerWidth <= 768 ? 1 : 3;
-    if (newCardsPerView !== cardsPerView) {
-        cardsPerView = newCardsPerView;
-        updateCarousel();
-    }
 });
 
 console.log('Script loaded successfully.'); 
