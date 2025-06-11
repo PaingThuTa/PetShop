@@ -18,6 +18,58 @@ const pets = [
     {"name": "Bara", "type": "Capybara", "age": 3, "img": "img/capybaras/capybara02.jpg"}
 ];
 
+// Carousel functionality
+let currentSlide = 0;
+const cardsPerView = window.innerWidth <= 768 ? 1 : 3;
+
+function initCarousel() {
+    const carousel = document.querySelector('.pet-cards');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    
+    if (carousel && dotsContainer) {
+        const totalSlides = Math.ceil(carousel.children.length / cardsPerView);
+        
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = `dot ${i === 0 ? 'active' : ''}`;
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+        
+        // Initial position
+        updateCarousel();
+    }
+}
+
+function moveCarousel(direction) {
+    const carousel = document.querySelector('.pet-cards');
+    const totalSlides = Math.ceil(carousel.children.length / cardsPerView);
+    
+    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+    updateCarousel();
+}
+
+function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const carousel = document.querySelector('.pet-cards');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (carousel) {
+        const slideWidth = 100 / cardsPerView;
+        carousel.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+}
+
 function adoptPet() {
     alert("Thank you for your interest in adopting! Our team will contact you soon.");
 }
@@ -31,7 +83,7 @@ function loadPets() {
         // Add filter buttons
         const filterContainer = document.createElement('div');
         filterContainer.className = 'filter-buttons';
-        const types = [...new Set(pets.map(pet => pet.type))]; // Get unique pet types
+        const types = [...new Set(pets.map(pet => pet.type))];
         
         // Add "All" button
         const allButton = document.createElement('button');
@@ -70,7 +122,7 @@ function filterPets(type) {
 
 function displayPets(petsToShow) {
     const petList = document.getElementById('pet-list');
-    petList.innerHTML = ''; // Clear current pets
+    petList.innerHTML = '';
     
     petsToShow.forEach(pet => {
         const petItem = document.createElement('div');
@@ -88,5 +140,19 @@ function displayPets(petsToShow) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', loadPets);
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    loadPets();
+    initCarousel();
+});
+
+// Update carousel view on window resize
+window.addEventListener('resize', () => {
+    const newCardsPerView = window.innerWidth <= 768 ? 1 : 3;
+    if (newCardsPerView !== cardsPerView) {
+        cardsPerView = newCardsPerView;
+        updateCarousel();
+    }
+});
+
 console.log('Script loaded successfully.'); 
